@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div th:fragment="footer">
+        <footer class="footer">
+            <p class="text-white font-weight-bold">&copy; choonwei 2021</p>
+        </footer>
+    </div>
+
+    <div th:fragment="footer-scripts">
+        <script
+                src="../static/js/jquery-3.3.1.min.js"
+                th:href="@{/js/jquery-3.3.1.min.css}"
+        ></script>
+        <script
+                src="../static/js/popper.min.js"
+                th:href="@{/js/popper.min.css}"
+        ></script>
+        <script
+                src="../static/js/bootstrap.min.js"
+                th:href="@{/js/bootstrap.min.css}"
+        ></script>
+        <script
+                src="../static/js/jquery.sticky.js"
+                th:href="@{/js/jquery.sticky.css}"
+        ></script>
+        <script src="../static/js/main.js" th:href="@{/js/main.css}"></script>
+    </div>
+</body>
+</html>

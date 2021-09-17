@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <div th:replace="fragments/header :: header-css(page='Base')"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="hero">
+    <p class="hero-space"></p>
+
+    <div class="container">
+        <!--        Body Location-->
+    </div>
+    <br />
+    <div class="container">
+        <div th:replace="fragments/footer :: footer"></div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer-scripts"></div>
+</body>
+</html>
