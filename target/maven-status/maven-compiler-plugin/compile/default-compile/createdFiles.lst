@@ -1,2 +1,7 @@
+com\stackify\sandbox\model\CustomEP.class
+com\stackify\sandbox\services\APIService.class
 com\stackify\sandbox\ViewController.class
 com\stackify\sandbox\SandboxApplication.class
+com\stackify\sandbox\services\SQLService.class
+com\stackify\sandbox\model\CustomSQL.class
+com\stackify\sandbox\exceptions\CustomThrownException.class

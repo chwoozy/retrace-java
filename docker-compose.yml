@@ -1,0 +1,13 @@
+version: "3.7"
+networks:
+  default:
+    external: true
+    name: retrace_network
+services:
+  web:
+    container_name: java_bad_app
+    build: .
+    volumes:
+      - /usr/local/stackify:/usr/local/stackify
+    ports:
+      - "80:80"
