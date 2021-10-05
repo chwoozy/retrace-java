@@ -4,9 +4,11 @@ networks:
     external: true
     name: retrace_network
 services:
-  web:
+  java_web:
     container_name: java_bad_app
+    image: java_bad_app
     build: .
+    restart: on-failure
     volumes:
       - /usr/local/stackify:/usr/local/stackify
     ports:
