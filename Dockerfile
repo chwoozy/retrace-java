@@ -1,6 +1,13 @@
-FROM openjdk:11.0.12
-ADD target/sandbox.jar sandbox.jar
-EXPOSE 8081
-EXPOSE 80
+FROM maven:3.6-jdk-11 as maven_build
+WORKDIR /app
+
+#copy directories
 COPY . .
-ENTRYPOINT ["java","-jar", "sandbox.jar"]
+
+RUN mvn clean install -U
+
+ADD target/sandbox.jar sandbox.jar
+
+EXPOSE 8081
+
+ENTRYPOINT ["java", "-DSTACKIFY_APPLICATION_NAME=JavaSandboxApp", "-DSTACKIFY_ENVIRONMENT_NAME=SandboxTest", "-javaagent:/usr/local/stackify/stackify-java-apm/stackify-java-apm.jar", "-jar", "sandbox.jar"]
