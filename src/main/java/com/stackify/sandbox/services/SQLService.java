@@ -19,7 +19,7 @@ public class SQLService {
     @Autowired
     public SQLService() {
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://172.18.0.2:3306/northwind");
+        dataSource.setUrl("jdbc:mysql://retrace_mysql:3306/northwind");
         dataSource.setUsername("retrace");
         dataSource.setPassword("BlackPanther@0405");
         jdbcTemplate = new JdbcTemplate(dataSource);
