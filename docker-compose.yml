@@ -5,11 +5,11 @@ networks:
     name: retrace_network
 services:
   java_web:
-    container_name: java_bad_app
-    image: java_bad_app
+    container_name: java_good_app
+    image: java_good_app
     build: .
-    restart: on-failure
+    restart: always
     volumes:
       - /usr/local/stackify:/usr/local/stackify
     ports:
-      - "88:8081"
+      - "80:8082"
