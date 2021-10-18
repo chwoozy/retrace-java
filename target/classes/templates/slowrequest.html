@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <div th:replace="fragments/header :: header-css(page='SlowRequest')"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="hero">
+    <div th:replace="fragments/header :: flashed(success=${success}, error=${error})"></div>
+
+    <div class="container">
+        <h1 class="font-weight-bold" align="center">SlowRequest</h1>
+        <form method="POST" th:action="@{/slowrequest}">
+            <div align="center">
+                <select
+                        class="apicall"
+                        id="teamDropdownSelector"
+                        type="text"
+                        name="apicall"
+                        placeholder="Select an API call"
+                >
+                    <option disabled selected>Select an API call</option>
+                    <option th:each="endpoint : ${endpoints}" th:value="${endpoint}" th:text="'/' + ${endpoint}"></option>
+                </select>
+                <br />
+                <button
+                        type="submit"
+                        class="btn btn-primary font-weight-bold button-orange"
+                        name="execute"
+                >
+                    GOOD APP
+                </button>
+            </div>
+        </form>
+    </div>
+    <br />
+    <div class="container">
+        <div th:replace="fragments/footer :: footer"></div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer-scripts"></div>
+</body>
+</html>
