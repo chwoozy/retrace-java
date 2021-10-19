@@ -1,5 +1,7 @@
 package com.stackify.sandbox;
 
+import com.stackify.api.common.log.direct.LogManager;
+import com.stackify.api.common.log.direct.Logger;
 import com.stackify.sandbox.exceptions.CustomThrownException;
 import com.stackify.sandbox.model.CustomEP;
 import com.stackify.sandbox.model.CustomSQL;
@@ -29,8 +31,12 @@ public class ViewController {
             new SQLService().updateQuery(CustomSQL.CREATETABLE.getQuery());
             new SQLService().updateQuery(CustomSQL.DROPTABLE.getQuery());
             System.out.println("Called SQL query on page: " + "/orm");
+            Logger.queueMessage("info", "Called SQL query on page: " + "/orm");
         } catch (DataAccessException e) {
             System.out.println("Failed SQL query on page: " + "/orm");
+            Logger.queueException("error", "Failed SQL query on page: " + "/orm", e);
+        } finally {
+            LogManager.shutdown();
         }
         return "orm";
     }
@@ -46,9 +52,13 @@ public class ViewController {
             }
             System.out.println("Called ORM N+1 call on page: " + "/orm");
             redirectAttributes.addFlashAttribute("success", "ORM N+1 query successful!");
+            Logger.queueMessage("info", "Called ORM N+1 call on page: " + "/orm");
         } catch (DataAccessException e) {
             System.out.println("Failed ORM N+1 call on page: " + "/orm");
             redirectAttributes.addFlashAttribute("error", "ORM N+1 query failed");
+            Logger.queueException("error", "Failed ORM N+1 call on page: " + "/orm", e);
+        } finally {
+            LogManager.shutdown();
         }
         return "redirect:/orm";
     }
@@ -58,9 +68,12 @@ public class ViewController {
         List<Map<String, Object>> getRequest = new SQLService().callQuery(CustomSQL.FULLJOIN.getQuery());
         if (getRequest.isEmpty()) {
             System.out.println("Failed SQL query on page: " + "/slowdb");
+            Logger.queueException(new Throwable("Failed SQL query on page: " + "/slowdb"));
         } else {
             System.out.println("Called SQL query on page: " + "/slowdb");
+            Logger.queueMessage("info", "Called SQL query on page: " + "/slowdb");
         }
+        LogManager.shutdown();
         return "slowdb";
     }
 
@@ -69,10 +82,12 @@ public class ViewController {
         Map<String, Object> result = new SQLService().executeSP("5sec_proc");
         if (result.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "SlowDB SQL query failed");
+            Logger.queueException(new Throwable("SlowDB SQL query failed"));
         } else {
             redirectAttributes.addFlashAttribute("success", "SQL stored procedure successfully executed!");
+            Logger.queueMessage("info", "SQL stored procedure successfully executed!");
         }
-
+        LogManager.shutdown();
         return "redirect:/slowdb";
     }
     
@@ -81,11 +96,14 @@ public class ViewController {
         List<Map<String, Object>> getRequest = new SQLService().callQuery(CustomSQL.LEFTJOIN.getQuery());
         if (getRequest.isEmpty()) {
             System.out.println("Failed SQL query on page: " + "/slowrequest");
+            Logger.queueException(new Throwable("Failed SQL query on page: " + "/slowrequest"));
         } else {
             System.out.println("Called SQL query on page: " + "/slowrequest");
+            Logger.queueMessage("info", "Called SQL query on page: " + "/slowrequest");
         }
         List<String> endPoints = CustomEP.getEndPointList();
         model.addAttribute("endpoints", endPoints);
+        LogManager.shutdown();
         return "slowrequest";
     }
 
@@ -95,11 +113,14 @@ public class ViewController {
         if (result.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "SlowRequest API call failed");
             System.out.println("Failed API call on page: " + "/slowrequest");
+            Logger.queueException(new Throwable("Failed API call on page: " + "/slowrequest"));
         } else {
             redirectAttributes.addFlashAttribute("success", "SlowRequest API call successful!");
             System.out.println(result);
             System.out.println("Successful API call on page: " + "/slowrequest");
+            Logger.queueMessage("info", "Successful API call on page: " + "/slowrequest");
         }
+        LogManager.shutdown();
         return "redirect:/slowrequest";
     }
 
@@ -108,9 +129,12 @@ public class ViewController {
         List<Map<String, Object>> getRequest = new SQLService().callQuery(CustomSQL.RIGHTJOIN.getQuery());
         if (getRequest.isEmpty()) {
             System.out.println("Failed SQL query on page: " + "/swallowedexception");
+            Logger.queueException(new Throwable("Failed SQL query on page: " + "/swallowedexception"));
         } else {
             System.out.println("Called SQL query on page: " + "/swallowedexception");
+            Logger.queueMessage("info", "Called SQL query on page: " + "/swallowedexception");
         }
+        LogManager.shutdown();
         return "swallowedexception";
     }
 
@@ -121,7 +145,9 @@ public class ViewController {
         } catch (CustomThrownException e) {
             System.out.println("Successfully swallowed exception on page: " + "/swallowedexception");
             redirectAttributes.addFlashAttribute("success", "Successful swallowed exception!");
+            Logger.queueMessage("info", "Successfully swallowed exception on page: " + "/swallowedexception");
         }
+        LogManager.shutdown();
         return "redirect:/swallowedexception";
     }
 
