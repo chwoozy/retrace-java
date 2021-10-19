@@ -1,5 +1,6 @@
 package com.stackify.sandbox;
 
+import com.stackify.api.common.log.direct.LogManager;
 import com.stackify.api.common.log.direct.Logger;
 import com.stackify.sandbox.exceptions.CustomThrownException;
 import com.stackify.sandbox.model.CustomEP;
@@ -35,12 +36,13 @@ public class ViewController {
             System.out.println("Failed SQL query on page: " + "/orm");
             Logger.queueException("error", "Failed SQL query on page: " + "/orm", e);
         }
+        LogManager.shutdown();
         return "orm";
     }
 
     @PostMapping("/orm")
     public String executeORM(Model model, RedirectAttributes redirectAttributes) {
-        Map<String, Object> result = new SQLService().executeSP("getsupplierid_proc");
+        Map<String, Object> result = new SQLService().executeSP("good_getsupplierid_proc");
         if (result.isEmpty()) {
             System.out.println("Failed ORM N+1 call on page: " + "/orm");
             Logger.queueException(new Throwable("Failed ORM N+1 call on page: " + "/orm"));
@@ -50,6 +52,7 @@ public class ViewController {
             Logger.queueMessage("info", "Called ORM N+1 call on page: " + "/orm");
             redirectAttributes.addFlashAttribute("success", "ORM N+1 query successful!");
         }
+        LogManager.shutdown();
         return "redirect:/orm";
     }
 
@@ -63,6 +66,7 @@ public class ViewController {
             System.out.println("Called SQL query on page: " + "/slowdb");
             Logger.queueMessage("info", "Called SQL query on page: " + "/slowdb");
         }
+        LogManager.shutdown();
         return "slowdb";
     }
 
@@ -76,7 +80,7 @@ public class ViewController {
             redirectAttributes.addFlashAttribute("success", "SQL stored procedure successfully executed!");
             Logger.queueMessage("info", "SQL stored procedure successfully executed!");
         }
-
+        LogManager.shutdown();
         return "redirect:/slowdb";
     }
     
@@ -92,6 +96,7 @@ public class ViewController {
         }
         List<String> endPoints = CustomEP.getEndPointList();
         model.addAttribute("endpoints", endPoints);
+        LogManager.shutdown();
         return "slowrequest";
     }
 
@@ -108,6 +113,7 @@ public class ViewController {
             System.out.println("Successful API call on page: " + "/slowrequest");
             Logger.queueMessage("info", "Successful API call on page: " + "/slowrequest");
         }
+        LogManager.shutdown();
         return "redirect:/slowrequest";
     }
 
@@ -121,6 +127,7 @@ public class ViewController {
             System.out.println("Called SQL query on page: " + "/swallowedexception");
             Logger.queueMessage("info", "Called SQL query on page: " + "/swallowedexception");
         }
+        LogManager.shutdown();
         return "swallowedexception";
     }
 
@@ -136,6 +143,7 @@ public class ViewController {
         System.out.println("Successfully swallowed exception on page: " + "/swallowedexception");
         Logger.queueMessage("info", "Successfully swallowed exception on page: " + "/swallowedexception");
         redirectAttributes.addFlashAttribute("success", "Successful swallowed exception!");
+        LogManager.shutdown();
         return "redirect:/swallowedexception";
     }
 
