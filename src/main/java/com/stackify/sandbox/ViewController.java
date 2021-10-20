@@ -106,12 +106,12 @@ public class ViewController {
         if (result.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "SlowRequest API call failed");
             System.out.println("Failed API call on page: " + "/slowrequest");
-            Logger.queueException(new Throwable("Failed API call on page: " + "/slowrequest"));
+            Logger.queueException("error", "Failed API call on page: " + "/slowrequest" ,new Throwable("Failed API call on page: " + "/slowrequest"));
         } else {
             redirectAttributes.addFlashAttribute("success", "SlowRequest API call successful!");
             System.out.println(result);
             System.out.println("Successful API call on page: " + "/slowrequest");
-            Logger.queueMessage("info", "Successful API call on page: " + "/slowrequest");
+            Logger.queueMessage("info", "Successful API call on page: /slowrequest:");
         }
         return "redirect:/slowrequest";
     }
