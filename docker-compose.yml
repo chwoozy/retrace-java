@@ -11,4 +11,4 @@ services:
     volumes:
       - /usr/local/stackify:/usr/local/stackify
     ports:
-      - "8081:8081"
+      - "80:8081"
