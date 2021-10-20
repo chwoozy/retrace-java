@@ -4,7 +4,7 @@ WORKDIR /app
 #copy directories
 COPY . .
 
-RUN mvn clean install -U
+#RUN mvn clean install -U
 
 ADD target/sandbox.jar sandbox.jar
 
