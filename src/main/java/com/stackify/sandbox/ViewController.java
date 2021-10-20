@@ -31,10 +31,12 @@ public class ViewController {
             new SQLService().updateQuery(CustomSQL.CREATETABLE.getQuery());
             new SQLService().updateQuery(CustomSQL.DROPTABLE.getQuery());
             System.out.println("Called SQL query on page: " + "/orm");
-            Logger.queueMessage("info", "Called SQL query on page: \" + \"/orm");
+            Logger.queueMessage("info", "Called SQL query on page: " + "/orm");
+	    LogManager.shutdown();
         } catch (DataAccessException e) {
             System.out.println("Failed SQL query on page: " + "/orm");
             Logger.queueException("error", "Failed SQL query on page: " + "/orm", e);
+	    LogManager.shutdown();
         }
         LogManager.shutdown();
         return "orm";
